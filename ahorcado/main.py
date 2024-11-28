@@ -78,4 +78,26 @@ def show_game():
     global guessed_word, hangman_step, wrong_letters
 
     name_frame.pack_forget() #ocultamos el formulario usado para ingresar el nombre del jugador
+    # Reinicio variables
+    guessed_word = "_" * len(word)  # palabra oculta
+    hangman_step = 0  # pasos del ahorcado
+    wrong_letters.clear()  # las letras erroneas
+    hangman_label.config(image=hangman_images[0])  # la imagen que muestra el avance del ahorcado
+    guess_label.config(text=" ".join(guessed_word))  # progreso de la palabra
+    category_label.config(text=f"Categoría: {category}")  # muestra la categoria a la que pertenece la palabra
+    update_wrong_letters()  # llamamos a un metodo que desarrollamos mas abajo
+    for button in letter_buttons:  # Creamos teclado
+        button.config(state="normal")
 
+    # Mostrar los widgets del juego
+    game_frame.pack()
+
+# Actualizar el texto del campo de "adivinanza"
+def update_guess(letter):
+    global guessed_word
+    guessed_word = "".join([letter if word[i] == letter else guessed_word[i] for i in range(len(word))])
+    guess_label.config(text=" ".join(guessed_word))
+    if guessed_word == word:
+        messagebox.showinfo("¡Felicidades!", "¡Has ganado!")
+        save_game_result(won=True)
+        disable_buttons()
