@@ -32,3 +32,23 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+
+
+# Metodo para guardar las partidas ganadas/perdidas en la bbdd
+def save_game_result(won):
+    conn = sqlite3.connect("ahorcado.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, ganadas, perdidas FROM jugadores WHERE nombre = ?", (player_name,))
+    result = cursor.fetchone()
+    if result:
+        player_id, ganadas, perdidas = result
+        if won:
+            ganadas += 1
+        else:
+            perdidas += 1
+        cursor.execute("UPDATE jugadores SET ganadas = ?, perdidas = ? WHERE id = ?", (ganadas, perdidas, player_id))
+    else:
+        cursor.execute("INSERT INTO jugadores (nombre, ganadas, perdidas) VALUES (?, ?, ?)",
+                       (player_name, 1 if won else 0, 0 if won else 1))
+    conn.commit()
+    conn.close()
