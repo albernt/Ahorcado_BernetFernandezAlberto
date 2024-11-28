@@ -55,3 +55,10 @@ def save_game_result(won):
                        (player_name, 1 if won else 0, 0 if won else 1))
     conn.commit()
     conn.close()
+
+# Metodo para seleccionar una de las palabras entre las tres categorias disponibles
+def select_random_word():
+    global word, guessed_word, category
+    category = random.choice(list(word_categories.keys()))
+    word = random.choice(word_categories[category]).upper()  #La transformamos en mayusculas
+    guessed_word = "_" * len(word) #Creamos una variable en la que guardaremos la palabra oculta, escrita con guiones bajos
