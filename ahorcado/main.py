@@ -1,6 +1,7 @@
 # Diccionarios de palabras organizadas en categorías
 import random
 import sqlite3
+from tkinter import messagebox
 
 word_categories = {
     "Frutas": [
@@ -101,3 +102,8 @@ def update_guess(letter):
         messagebox.showinfo("¡Felicidades!", "¡Has ganado!")
         save_game_result(won=True)
         disable_buttons()
+
+# Desactivar los botones de las letras
+def disable_buttons():
+    for button in letter_buttons:
+        button.config(state="disabled")
