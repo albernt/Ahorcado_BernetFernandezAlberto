@@ -1,7 +1,12 @@
-# Diccionarios de palabras organizadas en categorías
+import tkinter as tk
+from tkinter import messagebox
+from PIL import Image, ImageTk
 import random
 import sqlite3
-from tkinter import messagebox
+
+
+# Diccionarios de palabras organizadas en categorías
+
 
 word_categories = {
     "Frutas": [
@@ -103,6 +108,18 @@ def update_guess(letter):
         save_game_result(won=True)
         disable_buttons()
 
+#  Metodo para actualizar los pasos del estado del ahorcado
+def update_hangman_image():
+    global hangman_step
+    hangman_step += 1
+    if hangman_step < len(hangman_images):
+        hangman_label.config(image=hangman_images[hangman_step])
+    if hangman_step == max_steps:
+        messagebox.showinfo("Fin del juego", f"¡Perdiste! La palabra era: {word}")
+        save_game_result(won=False)
+        disable_buttons()
+
+
 # Desactivar los botones de las letras
 def disable_buttons():
     for button in letter_buttons:
@@ -151,3 +168,44 @@ name_frame.pack(pady=20)
 tk.Label(name_frame, text="Introduce tu nombre:", font=("Arial", 16), bg="#fdf5e6").pack(pady=10)
 name_entry = tk.Entry(name_frame, font=("Arial", 14))
 name_entry.pack(pady=10)
+
+def start_game():
+    global player_name
+    player_name = name_entry.get().strip()
+    if player_name:
+        show_game()
+    else:
+        messagebox.showerror("Error", "Por favor, introduce tu nombre.")
+
+
+tk.Button(name_frame, text="Comenzar Juego", font=("Arial", 14), bg="#ffccbc", fg="#bf360c",
+          command=start_game).pack(pady=10)
+
+# Crear el marco del juego
+game_frame = tk.Frame(root, bg="#fdf5e6")
+image_frame = tk.Frame(game_frame, bg="#fce4ec", highlightbackground="#f48fb1", highlightthickness=3)
+image_frame.pack(pady=10)
+hangman_label = tk.Label(image_frame, image=hangman_images[0], bg="#fce4ec")
+hangman_label.pack()
+
+category_label = tk.Label(game_frame, text=f"Categoría: {category}", font=("Arial", 18), bg="#fdf5e6", fg="#5c6bc0")
+category_label.pack(pady=10)
+
+guess_label = tk.Label(game_frame, text=" ".join(guessed_word), font=("Arial", 24), bg="#fdf5e6", fg="#66bb6a")
+guess_label.pack(pady=10)
+
+wrong_letters_label = tk.Label(game_frame, text="Letras incorrectas: ", font=("Arial", 14), bg="#fdf5e6", fg="#ef5350")
+wrong_letters_label.pack(pady=10)
+
+frame = tk.Frame(game_frame, bg="#fdf5e6")
+frame.pack(pady=10)
+
+letter_buttons = []
+for i, letter in enumerate("ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+    button = tk.Button(frame, text=letter, width=4, bg="#d1c4e9", fg="#212121", font=("Arial", 10),
+                       activebackground="#b39ddb", command=lambda l=letter: button_click(l))
+    button.grid(row=i // 9, column=i % 9)
+    letter_buttons.append(button)
+
+# Iniciar el bucle principal
+root.mainloop()
