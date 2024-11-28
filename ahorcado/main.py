@@ -1,4 +1,7 @@
 # Diccionarios de palabras organizadas en categorías
+import random
+import sqlite3
+
 word_categories = {
     "Frutas": [
         "Guayaba", "Cereza", "Ciruela", "Papaya", "Lima", "Melon", "Tamarindo", "Granada",
