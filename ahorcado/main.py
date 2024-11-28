@@ -17,6 +17,9 @@ word_categories = {
     ]
 }
 
+# Declaración de variables que vamos a usar en el proyecto
+player_name = ""
+
 
 # Creamos la conexion a SQLite y creamos tabla. En este caso he modelado solo una tabla de jugadores, en la cual guardaré las victorias y derrotas
 def init_db():
