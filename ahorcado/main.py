@@ -182,29 +182,29 @@ tk.Button(name_frame, text="Comenzar Juego", font=("Arial", 14), bg="#ffccbc", f
           command=start_game).pack(pady=10)
 
 # Crear el marco del juego
-game_frame = tk.Frame(root, bg="#fdf5e6")
+game_frame = tk.Frame(root, bg="#fdf5e6")  #contenedor del juego con el color de fondo pastel
 image_frame = tk.Frame(game_frame, bg="#fce4ec", highlightbackground="#f48fb1", highlightthickness=3)
-image_frame.pack(pady=10)
-hangman_label = tk.Label(image_frame, image=hangman_images[0], bg="#fce4ec")
+image_frame.pack(pady=10) #creamos un subcontenedor para colocarle las imagenes del ahorcado
+hangman_label = tk.Label(image_frame, image=hangman_images[0], bg="#fce4ec") #colocamos la imagen del ahorcado dentro de ese subcontenedor
 hangman_label.pack()
 
-category_label = tk.Label(game_frame, text=f"Categoría: {category}", font=("Arial", 18), bg="#fdf5e6", fg="#5c6bc0")
+category_label = tk.Label(game_frame, text=f"Categoría: {category}", font=("Arial", 18), bg="#fdf5e6", fg="#5c6bc0") #etiqueta para mostrar la categoria
 category_label.pack(pady=10)
 
-guess_label = tk.Label(game_frame, text=" ".join(guessed_word), font=("Arial", 24), bg="#fdf5e6", fg="#66bb6a")
+guess_label = tk.Label(game_frame, text=" ".join(guessed_word), font=("Arial", 24), bg="#fdf5e6", fg="#66bb6a") #label para mostrar el progreso de la palabra
 guess_label.pack(pady=10)
 
-wrong_letters_label = tk.Label(game_frame, text="Letras incorrectas: ", font=("Arial", 14), bg="#fdf5e6", fg="#ef5350")
+wrong_letters_label = tk.Label(game_frame, text="Letras incorrectas: ", font=("Arial", 14), bg="#fdf5e6", fg="#ef5350") #label para mostrar las letras incorrectas
 wrong_letters_label.pack(pady=10)
 
 frame = tk.Frame(game_frame, bg="#fdf5e6")
 frame.pack(pady=10)
 
 letter_buttons = []
-for i, letter in enumerate("ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+for i, letter in enumerate("ABCDEFGHIJKLMNOPQRSTUVWXYZ"): #creamos el teclado introduciendo las letras en una lista
     button = tk.Button(frame, text=letter, width=4, bg="#d1c4e9", fg="#212121", font=("Arial", 10),
                        activebackground="#b39ddb", command=lambda l=letter: button_click(l))
-    button.grid(row=i // 9, column=i % 9)
+    button.grid(row=i // 9, column=i % 9) #usamos un grid para organizarlos dentro del frame
     letter_buttons.append(button)
 
 # Iniciar el bucle principal
