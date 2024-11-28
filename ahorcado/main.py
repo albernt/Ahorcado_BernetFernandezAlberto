@@ -21,6 +21,13 @@ word_categories = {
 }
 
 # Declaración de variables que vamos a usar en el proyecto
+word = ""
+guessed_word = ""
+category = ""
+max_steps = 7
+hangman_step = 0
+letter_buttons = []
+wrong_letters = set()
 player_name = ""
 
 
@@ -65,3 +72,10 @@ def select_random_word():
     category = random.choice(list(word_categories.keys()))
     word = random.choice(word_categories[category]).upper()  #La transformamos en mayusculas
     guessed_word = "_" * len(word) #Creamos una variable en la que guardaremos la palabra oculta, escrita con guiones bajos
+
+# Mostrar el juego
+def show_game():
+    global guessed_word, hangman_step, wrong_letters
+
+    name_frame.pack_forget() #ocultamos el formulario usado para ingresar el nombre del jugador
+
