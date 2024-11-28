@@ -131,3 +131,23 @@ def button_click(letter):
         update_wrong_letters()
         update_hangman_image()
 
+# Configuración inicial
+init_db()
+select_random_word()
+
+# Creacion de la ventana principal
+root = tk.Tk()
+root.title("Juego del Ahorcado") #titulo
+root.geometry("420x700") #tamaño ventana
+root.resizable(False, False) #redimensionamiento desactivado
+root.configure(bg="#fdf5e6")
+
+# Cargar las imágenes
+hangman_images = load_hangman_images()
+
+# Crear el formulario para el nombre
+name_frame = tk.Frame(root, bg="#fdf5e6")
+name_frame.pack(pady=20)
+tk.Label(name_frame, text="Introduce tu nombre:", font=("Arial", 16), bg="#fdf5e6").pack(pady=10)
+name_entry = tk.Entry(name_frame, font=("Arial", 14))
+name_entry.pack(pady=10)
