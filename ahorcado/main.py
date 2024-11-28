@@ -107,3 +107,27 @@ def update_guess(letter):
 def disable_buttons():
     for button in letter_buttons:
         button.config(state="disabled")
+
+# Metodo para actualizar la etiqueta de letras incorrectas
+def update_wrong_letters():
+    wrong_letters_label.config(text=f"Letras incorrectas: {', '.join(sorted(wrong_letters))}")
+
+# Metodo para cargar las imagenes de la 1 a la 8 en funcion de los pasos
+def load_hangman_images():
+    images = []
+    for i in range(1, 9):
+        img = Image.open(f"hangman{i}.png")
+        img = img.resize((200, 200), Image.Resampling.LANCZOS)
+        images.append(ImageTk.PhotoImage(img))
+    return images
+
+
+# Función para manejar el clic en los botones de las letras
+def button_click(letter):
+    if letter in word:
+        update_guess(letter)
+    else:
+        wrong_letters.add(letter)
+        update_wrong_letters()
+        update_hangman_image()
+
